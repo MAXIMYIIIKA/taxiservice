@@ -1,0 +1,16 @@
+#loginform{
+    border: 1px solid;
+    max-width: 200px;
+    padding: 10px;
+}
+
+.form-actions {
+    position: relative;
+    margin: auto;
+}
+.alert-error{
+    color: red;
+}
+.alert-success{
+    color: green;
+}

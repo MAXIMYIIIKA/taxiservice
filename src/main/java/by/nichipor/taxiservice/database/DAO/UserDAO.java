@@ -11,9 +11,11 @@ import java.util.List;
 public interface UserDAO {
     List<User> findAllUsers();
     User findUserById(int id);
-    List<Roles> findRoles(User user);
     boolean deleteUser(int id);
     boolean deleteUser(User user);
     boolean createUser(User user);
     boolean updateUser(User user);
+    List<Roles> findUserRoles(User user);
+    boolean addUserRole(User user, Roles role);
+    boolean deleteUserRole(User user, Roles role);
 }

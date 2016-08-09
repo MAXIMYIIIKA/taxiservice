@@ -35,17 +35,16 @@ public class User implements Comparator<User>{
         setUserId(-1);
         setUsername(username);
         setPassword(password);
-        setEnabled(true);
         roles = new ArrayList<>();
-        roles.add(Roles.user);
+        roles.add(Roles.ROLE_USER);
     }
 
-    public User(int userId, String username, String password, boolean enabled, List<Roles> roles){
+    public User(int userId, String username, String password, boolean enabled){
         setUserId(userId);
         setUsername(username);
         setPassword(password);
         setEnabled(enabled);
-        setRoles(roles);
+        findRoles();
     }
 
     public int getUserId() {
@@ -72,10 +71,9 @@ public class User implements Comparator<User>{
         return roles;
     }
 
-    public void setRoles(List<Roles> roles) {
-        this.roles = new ArrayList<>();
-        for (Roles role: roles){
-            this.roles.add(role);
+    public void findRoles() {
+        if (isExist()) {
+            this.roles = userDAO.findUserRoles(this);
         }
     }
 
@@ -89,11 +87,7 @@ public class User implements Comparator<User>{
     }
 
     public boolean addRole (Roles role){
-        if (!hasRole(role)) {
-            this.roles.add(role);
-            return true;
-        }
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     public boolean isEnabled() {

@@ -15,9 +15,9 @@
 <div id="loginform">
     <form action="login" method="post">
             <legend>Please Login</legend>
-        <%--<input type="hidden"--%>
-               <%--name="${_csrf.parameterName}"--%>
-               <%--value="${_csrf.token}"/>--%>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
             <div class="alert alert-error">
                 ${error}
             </div>
@@ -30,6 +30,7 @@
             <input type="password" id="password" name="password"/>
             <div class="form-actions">
                 <button type="submit" class="btn">Log in</button>
+                <a href="register"><button type="button" class="btn">Registration</button></a>
             </div>
     </form>
 </div>

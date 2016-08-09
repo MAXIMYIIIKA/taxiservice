@@ -15,7 +15,7 @@
 
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="by.nichipor"/>
+    <context:component-scan base-package="by.nichipor.taxiservice"/>
 
     <mvc:resources mapping="/resources/**" location="WEB-INF/web-resources/"/>
 

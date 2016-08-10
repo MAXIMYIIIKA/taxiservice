@@ -1,11 +1,12 @@
 by\nichipor\taxiservice\database\DAO\UserDAOImpl.class
+by\nichipor\taxiservice\entity\Role.class
 by\nichipor\taxiservice\entity\User.class
-by\nichipor\taxiservice\security\controllers\RegisterController.class
-by\nichipor\taxiservice\HelloController.class
-by\nichipor\taxiservice\security\controllers\LoginController.class
+by\nichipor\taxiservice\controllers\HelloController.class
+by\nichipor\taxiservice\controllers\RegisterController.class
 by\nichipor\taxiservice\database\DAO\UserDAO.class
+by\nichipor\taxiservice\controllers\LoginController.class
+by\nichipor\taxiservice\controllers\AccessDeniedController.class
 by\nichipor\taxiservice\security\config\SecurityWebApplicationInitializer.class
 by\nichipor\taxiservice\security\config\SecurityConfig.class
-by\nichipor\taxiservice\entity\Roles.class
-by\nichipor\taxiservice\security\controllers\AccessDeniedController.class
 by\nichipor\taxiservice\database\config\DatabaseConfig.class
+by\nichipor\taxiservice\services\UserManager.class

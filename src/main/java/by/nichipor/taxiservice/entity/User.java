@@ -2,6 +2,8 @@ package by.nichipor.taxiservice.entity;
 
 import by.nichipor.taxiservice.database.DAO.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -14,37 +16,27 @@ import java.util.List;
  */
 
 @Component
-public class User implements Comparator<User>{
+public class User {
     private int userId;
     private String username;
     private String password;
-    private List<Roles> roles;
     private boolean enabled;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserDAO userDAO;
-
-    public User(){
-        this.roles = new ArrayList<>();
-    }
+    public User(){}
 
     public User(String username, String password){
         setUserId(-1);
         setUsername(username);
         setPassword(password);
-        roles = new ArrayList<>();
-        roles.add(Roles.ROLE_USER);
     }
 
     public User(int userId, String username, String password, boolean enabled){
-        setUserId(userId);
-        setUsername(username);
-        setPassword(password);
-        setEnabled(enabled);
-        findRoles();
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
     }
 
     public int getUserId() {
@@ -64,30 +56,12 @@ public class User implements Comparator<User>{
     }
 
     public void setPassword(String password) {
+        this.passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
     }
 
-    public List<Roles> getRoles() {
-        return roles;
-    }
-
-    public void findRoles() {
-        if (isExist()) {
-            this.roles = userDAO.findUserRoles(this);
-        }
-    }
-
-    public boolean hasRole(Roles checkRole){
-        for (Roles role: this.roles){
-            if (role.equals(checkRole)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean addRole (Roles role){
-        throw new UnsupportedOperationException();
+    public String getPassword() {
+        return password;
     }
 
     public boolean isEnabled() {
@@ -98,41 +72,13 @@ public class User implements Comparator<User>{
         this.enabled = enabled;
     }
 
-    public boolean isExist(){
-        for (User user : userDAO.findAllUsers()) {
-            if (compare(this, user) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean update(){
-        if (this.username != null && this.password != null) {
-            if (this.userId == -1 && !isExist()) {
-                this.userDAO.createUser(this);
-                return true;
-            } else if (isExist()){
-                userDAO.updateUser(this);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean delete(){
-        if (isExist()){
-            userDAO.deleteUser(this);
-            return true;
-        }
-        return false;
-    }
-
     @Override
-    public int compare(User o1, User o2) {
-        if (o1.getUsername().equals(o2.getUsername())) {
-            return 0;
-        }
-        return -1;
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }

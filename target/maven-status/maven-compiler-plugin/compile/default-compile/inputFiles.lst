@@ -1,11 +1,12 @@
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\database\config\DatabaseConfig.java
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\database\DAO\UserDAO.java
-C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\HelloController.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\controllers\HelloController.java
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\entity\User.java
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\security\config\SecurityWebApplicationInitializer.java
-C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\security\controllers\AccessDeniedController.java
-C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\entity\Roles.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\controllers\LoginController.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\entity\Role.java
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\security\config\SecurityConfig.java
 C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\database\DAO\UserDAOImpl.java
-C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\security\controllers\RegisterController.java
-C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\security\controllers\LoginController.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\controllers\AccessDeniedController.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\controllers\RegisterController.java
+C:\Users\maxim\IdeaProjects\taxiservice\src\main\java\by\nichipor\taxiservice\services\UserManager.java

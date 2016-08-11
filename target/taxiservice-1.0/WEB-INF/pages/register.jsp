@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -15,9 +16,7 @@
 <div id="loginform">
     <form action="" method="post">
         <legend>Register form</legend>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
+        <sec:csrfInput />
         <div class="alert alert-error">
             ${error}
         </div>

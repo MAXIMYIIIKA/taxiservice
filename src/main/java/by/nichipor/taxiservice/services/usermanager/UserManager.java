@@ -1,4 +1,4 @@
-package by.nichipor.taxiservice.services;
+package by.nichipor.taxiservice.services.usermanager;
 
 import by.nichipor.taxiservice.database.DAO.UserDAO;
 import by.nichipor.taxiservice.entity.Role;
@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Max Nichipor on 10.08.2016.
@@ -26,8 +30,12 @@ public class UserManager {
         return userDAO.getAllUsers();
     }
 
+    public Map<String, List<Role>> getAllRoles() {
+        return userDAO.getAllRoles();
+    }
+
     public boolean isExist(User user){
-        if (getUserByUsername(user.getUsername()) != null || getUserById(user.getUserId()) != null) {
+        if (user != null && (getUserByUsername(user.getUsername()) != null || getUserById(user.getUserId()) != null)) {
             return true;
         }
         return false;
@@ -123,5 +131,28 @@ public class UserManager {
             return true;
         }
         return false;
+    }
+
+    public void showUserById(Model ui, String userId){
+        try {
+            if (userId != null && userId.length() > 0 && Integer.valueOf(userId) > 0) {
+                User gotUser = getUserById(Integer.valueOf(userId));
+                if (isExist(gotUser)) {
+                    List<User> users = new ArrayList<>();
+                    Map<String, List<Role>> roles = new HashMap<>();
+                    users.add(gotUser);
+                    roles.put(gotUser.getUsername(), getUserRoles(gotUser));
+                    ui.addAttribute("users", users);
+                    ui.addAttribute("user_roles", roles);
+                    ui.addAttribute("success", "User found!");
+                } else {
+                    ui.addAttribute("error", "User not found!");
+                }
+            } else {
+                ui.addAttribute("error", "User not found!");
+            }
+        } catch (NumberFormatException e){
+            ui.addAttribute("error", "Use only numbers, please!");
+        }
     }
 }

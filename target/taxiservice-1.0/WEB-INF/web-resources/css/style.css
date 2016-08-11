@@ -14,3 +14,18 @@
 .alert-success{
     color: green;
 }
+.userlist{
+    border: 2px solid;
+    background: black;
+    float: left;
+    margin: 10px;
+}
+.userlist tr{
+    background: white;
+}
+.userlist td{
+    padding: 2px;
+}
+.panel-button {
+    float: right;
+}

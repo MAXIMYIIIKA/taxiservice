@@ -1,7 +1,7 @@
-package by.nichipor.taxiservice.controllers;
+package by.nichipor.taxiservice.security.controllers;
 
 import by.nichipor.taxiservice.entity.User;
-import by.nichipor.taxiservice.services.UserManager;
+import by.nichipor.taxiservice.services.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

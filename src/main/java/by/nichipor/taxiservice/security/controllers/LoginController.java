@@ -1,4 +1,4 @@
-package by.nichipor.taxiservice.controllers;
+package by.nichipor.taxiservice.security.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

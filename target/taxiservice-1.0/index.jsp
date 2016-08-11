@@ -8,10 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>dfsg</title>
+    <title>index</title>
 </head>
 <body>
-asdfdhgfd
-<a href="hello">hello</a>
+<jsp:forward page="main"/>
 </body>
 </html>

@@ -28,21 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/resources/**").permitAll()
-                    .antMatchers("/register*").permitAll()
-                    .antMatchers("/hello**").access("hasRole('ROLE_ADMIN')")
-                    .anyRequest().authenticated()
+                    .antMatchers("/resources/**", "/", "/register*", "/main").permitAll()
+                    .antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
+//                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
                     .and()
-                .logout()
+                .logout().logoutUrl("/logout")
                     .permitAll()
                     .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                    .and()
-                .csrf().disable();
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
     @Autowired

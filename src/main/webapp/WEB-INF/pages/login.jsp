@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -14,24 +16,22 @@
 <body>
 <div id="loginform">
     <form action="login" method="post">
-            <legend>Please Login</legend>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-            <div class="alert alert-error">
-                ${error}
-            </div>
-            <div class="alert alert-success">
-                ${logout}
-            </div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"/>
-            <div class="form-actions">
-                <button type="submit" class="btn">Log in</button>
-                <a href="register"><button type="button" class="btn">Registration</button></a>
-            </div>
+        <sec:csrfInput />
+        <legend>Please Login</legend>
+        <div class="alert alert-error">
+            ${error}
+        </div>
+        <div class="alert alert-success">
+            ${logout}
+        </div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"/>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"/>
+        <div class="form-actions">
+            <button type="submit" class="btn">Log in</button>
+            <a href="register"><button type="button" class="btn">Registration</button></a>
+        </div>
     </form>
 </div>
 </body>

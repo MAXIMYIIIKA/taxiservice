@@ -17,10 +17,34 @@
 
     <context:component-scan base-package="by.nichipor.taxiservice"/>
 
-    <mvc:resources mapping="/resources/**" location="WEB-INF/web-resources/"/>
+    <mvc:resources mapping="/resources/**" location="/web-resources/"/>
 
+    <!--Locale interceptor setup-->
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor"
+              class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang" />
+        </bean>
+    </mvc:interceptors>
+
+    <!--View Resolver setup-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="prefix" value="/pages/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--Locale bean setup-->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="/WEB-INF/classes/locale/locale"/>
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="fileEncodings" value="UTF-8" />
+        <property name="cacheSeconds" value="0" />
+    </bean>
+
+    <!--Default locale setup-->
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="ru"/>
     </bean>
 </beans>

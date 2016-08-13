@@ -1,4 +1,4 @@
-package by.nichipor.taxiservice.database.DAO;
+package by.nichipor.taxiservice.database.dao;
 
 import by.nichipor.taxiservice.entity.Role;
 import by.nichipor.taxiservice.entity.User;
@@ -41,7 +41,9 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         User tempUser;
-        try(ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery(SQL_SELECT_ALL_USERS)){
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS)){
             while (resultSet.next()) {
                 tempUser = new User(resultSet.getInt("userId"),
                                     resultSet.getString("username"),
@@ -58,7 +60,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Map<String,List<Role>> getAllRoles() {
         Map<String,List<Role>> roles = new HashMap<>();
-        try(ResultSet resultSet = dataSource.getConnection().createStatement().executeQuery(SQL_SELECT_ALL_USER_ROLES)){
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_USER_ROLES)){
             while (resultSet.next()) {
                 if (roles.containsKey(resultSet.getString("username"))) {
                     roles.get(resultSet.getString("username")).add(Role.valueOf(resultSet.getString("role")));
@@ -76,8 +80,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_SELECT_USER_BY_ID)){
+        ResultSet resultSet;
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_ID)){
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -87,14 +92,6 @@ public class UserDAOImpl implements UserDAO {
                             resultSet.getBoolean("enabled"));
         } catch (SQLException e) {
             logger.error(e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    logger.error("Closing resultSet exception " + e);
-                }
-            }
         }
         return user;
     }
@@ -102,8 +99,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserByUsername(String username) {
         User user = null;
-        ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_SELECT_USER_BY_USERNAME)){
+        ResultSet resultSet;
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_USERNAME)){
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -113,14 +111,6 @@ public class UserDAOImpl implements UserDAO {
                     resultSet.getBoolean("enabled"));
         } catch (SQLException e) {
             logger.error(e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    logger.error("Closing resultSet exception " + e);
-                }
-            }
         }
         return user;
     }
@@ -128,8 +118,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Role> getUserRoles(User user) {
         List<Role> roles = new ArrayList<>();
-        ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_SELECT_USER_ROLES)){
+        ResultSet resultSet;
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_ROLES)){
             preparedStatement.setString(1, user.getUsername());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -137,20 +128,13 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             logger.error(e);
-        } finally {
-            if (resultSet != null){
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    logger.error("Closing resultSet exception " + e);
-                }
-            }
         }
         return roles;
     }
 
     private boolean updateUserRole(User user, Role role, String sqlQuery) {
-        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(sqlQuery)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, role.name());
             return preparedStatement.execute();
@@ -172,7 +156,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean deleteAllUserRoles(User user) {
-        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_DELETE_ALL_USER_ROLES)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_USER_ROLES)) {
             preparedStatement.setString(1, user.getUsername());
             return preparedStatement.execute();
         } catch (SQLException e) {
@@ -183,7 +168,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean createUser(User user) {
-        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_INSERT_USER)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             return preparedStatement.execute();
@@ -195,7 +181,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean deleteUser(User user) {
-        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_DELETE_USER)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setInt(2, user.getUserId());
             return preparedStatement.execute();
@@ -207,7 +194,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean updateUser(User user) {
-        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SQL_UPDATE_USER)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setInt(3, user.getUserId());

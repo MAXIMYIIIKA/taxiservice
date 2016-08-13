@@ -1,4 +1,4 @@
-package by.nichipor.taxiservice.database.DAO;
+package by.nichipor.taxiservice.database.dao;
 
 import by.nichipor.taxiservice.entity.Role;
 import by.nichipor.taxiservice.entity.User;

@@ -26,11 +26,11 @@ public class UserManager {
     MessageSource messageSource;
 
     public List<User> getAllUsers(){
-        return userDAO.getAllUsers();
+        return userDAO.findAllUsers();
     }
 
     public Map<String, List<Role>> getAllRoles() {
-        return userDAO.getAllRoles();
+        return userDAO.findAllRoles();
     }
 
     public boolean isExist(User user){
@@ -40,16 +40,16 @@ public class UserManager {
         return false;
     }
 
-    public User getUserById(int UserId){
-        if (UserId > 0) {
-            return userDAO.getUserById(UserId);
+    public User getUserById(int userId){
+        if (userId > 0) {
+            return userDAO.findUserById(userId);
         }
         return null;
     }
 
     public User getUserByUsername(String username){
         if (username.length() >= 3) {
-            return userDAO.getUserByUsername(username);
+            return userDAO.findUserByUsername(username);
         }
         return null;
     }
@@ -63,7 +63,22 @@ public class UserManager {
         return false;
     }
 
-    public boolean createUser(User user){
+    public boolean changeUserName(User user, String username){
+        if (username.length() > 0 && getUserByUsername(username) == null){
+            List<Role> roles = new ArrayList<>();
+            roles.addAll(userDAO.findUserRoles(user));
+            userDAO.deleteAllUserRoles(user);
+            user.setUsername(username);
+            userDAO.updateUser(user);
+            for (Role role: roles) {
+                userDAO.addUserRole(user, role);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean createUser(User user){
         if (!isExist(user) && user.getUsername().length() >= 3){
             userDAO.createUser(user);
             return true;
@@ -78,14 +93,14 @@ public class UserManager {
         return false;
     }
 
-    public boolean deleteUser(User user){
+    private boolean deleteUser(User user){
         if (isExist(user) && userDAO.deleteUser(user)){
             return true;
         }
         return false;
     }
 
-    public boolean deleteAllUserRoles(User user){
+    private boolean deleteAllUserRoles(User user){
         if (isExist(user) && userDAO.deleteAllUserRoles(user)) {
             return true;
         }
@@ -100,7 +115,7 @@ public class UserManager {
 
     public List<Role> getUserRoles (User user) {
         if(isExist(user)){
-            return userDAO.getUserRoles(user);
+            return userDAO.findUserRoles(user);
         }
         throw new NullPointerException("Invalid user");
     }
@@ -127,6 +142,39 @@ public class UserManager {
     public boolean deleteUserRole(User user, Role role) {
         if (isExist(user) && hasRole(user, role)) {
             userDAO.deleteUserRole(user, role);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean editRoles(User user, List<Role> newRoles) {
+        boolean errors = false;
+        for (Role role: newRoles) {
+            if (!getUserRoles(user).contains(role) && !userDAO.addUserRole(user, role)){
+                errors = true;
+            }
+        }
+        for (Role role: getUserRoles(user)) {
+            if (!newRoles.contains(role) && !userDAO.deleteUserRole(user, role)) {
+                errors = true;
+            }
+        }
+        return errors;
+    }
+
+    public boolean disableUser(User user) {
+        if (isExist(user) && user.isEnabled()) {
+            user.setEnabled(false);
+            userDAO.updateUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean enableUser(User user) {
+        if (isExist(user) && !user.isEnabled()) {
+            user.setEnabled(true);
+            userDAO.updateUser(user);
             return true;
         }
         return false;

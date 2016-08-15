@@ -31,14 +31,14 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_DELETE_USER_ROLE = "DELETE FROM user_roles WHERE username = ? AND role = ?";
     private static final String SQL_DELETE_ALL_USER_ROLES = "DELETE FROM user_roles WHERE username = ?";
     private static final String SQL_INSERT_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
-    private static final String SQL_UPDATE_USER = "UPDATE users SET username = ?, password = ? WHERE userId = ?";
+    private static final String SQL_UPDATE_USER = "UPDATE users SET username = ?, password = ?, enabled = ? WHERE userId = ?";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username = ? AND userId = ?";
 
     @Autowired
     private DataSource dataSource;
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         User tempUser;
         try(Connection connection = dataSource.getConnection();
@@ -58,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Map<String,List<Role>> getAllRoles() {
+    public Map<String,List<Role>> findAllRoles() {
         Map<String,List<Role>> roles = new HashMap<>();
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
@@ -78,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int userId) {
+    public User findUserById(int userId) {
         User user = null;
         ResultSet resultSet;
         try(Connection connection = dataSource.getConnection();
@@ -97,7 +97,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User findUserByUsername(String username) {
         User user = null;
         ResultSet resultSet;
         try(Connection connection = dataSource.getConnection();
@@ -116,7 +116,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Role> getUserRoles(User user) {
+    public List<Role> findUserRoles(User user) {
         List<Role> roles = new ArrayList<>();
         ResultSet resultSet;
         try(Connection connection = dataSource.getConnection();
@@ -198,7 +198,12 @@ public class UserDAOImpl implements UserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getUserId());
+            if (user.isEnabled()) {
+                preparedStatement.setInt(3, 1);
+            } else {
+                preparedStatement.setInt(3, 0);
+            }
+            preparedStatement.setInt(4, user.getUserId());
             return preparedStatement.execute();
         } catch (SQLException e) {
             logger.error(e);

@@ -26,10 +26,8 @@
         <div class="alert alert-success">
             ${logout}
         </div>
-        <label for="username"><spring:message code="username" /></label>
-        <input type="text" id="username" name="username"/>
-        <label for="password"><spring:message code="password" /></label>
-        <input type="password" id="password" name="password"/>
+        <input type="text" id="username" name="username" required pattern="^[a-zA-Z]{3,}$" placeholder="<spring:message code="username" />"/>
+        <input type="password" id="password" name="password" required pattern="^[a-zA-Z0-9]{4,}$" placeholder="<spring:message code="password" />"/>
         <div class="form-actions">
             <button type="submit" class="btn"><spring:message code="login_button" /></button>
             <a href="register"><button type="button" class="btn"><spring:message code="register_button" /></button></a>

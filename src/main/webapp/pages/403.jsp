@@ -15,7 +15,6 @@
 </head>
 <body>
 <h1><spring:message code="403.error" /></h1>
-        <a href="main"><button type="button" class="btn"><spring:message code="go_main_button" /></button></a>
 <a href="?lang=ru">RU</a>
 <a href="?lang=en">EN</a>
 </body>

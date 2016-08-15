@@ -15,8 +15,6 @@ public class User {
     private String password;
     private boolean enabled;
 
-    private PasswordEncoder passwordEncoder;
-
     public User(){}
 
     public User(String username, String password){
@@ -49,7 +47,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
     }
 

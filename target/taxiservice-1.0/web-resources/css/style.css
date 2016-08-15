@@ -4,6 +4,10 @@
     padding: 10px;
 }
 
+input {
+    margin: 3px auto;
+}
+
 .form-actions {
     position: relative;
     margin: auto;

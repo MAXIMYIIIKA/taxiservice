@@ -33,7 +33,7 @@
     <%--<label for="changemode-driving">Driving</label>--%>
 <%--</div>--%>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4KOwBnPvvEgubHllGkwAwlYnqSoD5G78&signed_in=true&libraries=places&callback=initMap&sensor=false&amp;language=en-US"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4KOwBnPvvEgubHllGkwAwlYnqSoD5G78&signed_in=true&libraries=places&callback=initMap&language=en"
         async defer></script>
 <form method="post">
     <sec:csrfInput />

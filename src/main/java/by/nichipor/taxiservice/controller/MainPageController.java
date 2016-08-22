@@ -44,23 +44,8 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "map", method = RequestMethod.POST)
-    public String showMap(@RequestParam("placeOut") String placeOut, @RequestParam("placeIn") String placeIn, Model ui){
-        String enPlaceIn = null;
-        String enPlaceOut = null;
-        byte[] in = null;
-        byte[] out = null;
-        try {
-            in = placeIn.getBytes();
-            out = placeOut.getBytes();
-            enPlaceIn = new String(in, "UTF-8");
-            enPlaceOut = new String(out, "UTF-8");
-        } catch (UnsupportedEncodingException e){
-            System.err.println(e);
-        }
-        ui.addAttribute("placeOut", "&origin=" + enPlaceOut);
-        if (placeIn.length() > 0) {
-            ui.addAttribute("placeIn", "&destination=" + enPlaceIn);
-        }
-        return "map";
+    public String showMap(@RequestParam("currentLatLng") String currentLatLng, @RequestParam("targetLatLng") String targetLatLng, Model ui){
+        ui.addAttribute("latlng", "curr: " + currentLatLng + "\n target: " + targetLatLng);
+        return "dispatcher";
     }
 }

@@ -6,6 +6,8 @@
                  "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
 
+
+
     <!--encoding filter-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -18,6 +20,7 @@
             <param-name>forceEncoding</param-name>
             <param-value>true</param-value>
         </init-param>
+        <async-supported>true</async-supported>
     </filter>
 
     <filter-mapping>
@@ -29,6 +32,7 @@
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
     </servlet>
 
     <servlet-mapping>

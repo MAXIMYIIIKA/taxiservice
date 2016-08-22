@@ -76,3 +76,12 @@ input {
     font-size: 13px;
     font-weight: 300;
 }
+#new-order{
+    width: 100px;
+    position: relative;
+    height: 100px;
+    background-color: aqua;
+    margin: 0 auto;
+    opacity: 0;
+    top: -10%;
+}

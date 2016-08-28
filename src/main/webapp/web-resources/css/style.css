@@ -85,3 +85,15 @@ input {
     opacity: 0;
     top: -10%;
 }
+#new-orders{
+    border: 2px solid;
+    background: black;
+    float: left;
+    margin: 10px;
+}
+#new-orders tr{
+    background: white;
+}
+#new-orders td{
+    padding: 2px;
+}

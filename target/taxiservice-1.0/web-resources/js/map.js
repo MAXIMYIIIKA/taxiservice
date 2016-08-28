@@ -5,8 +5,8 @@
 function initMap() {
     var origin_place = {address: undefined};
     var destination_place = {address: undefined};
-    var currentInputEl = {location: 'currentLocation', latlng: 'currentLatLng'};
-    var targetInputEl = {location: 'targetLocation', latlng: 'targetLatLng'};
+    var currentInputEl = {location: 'currentLocation', lat: 'currentLat', lng: 'currentLng'};
+    var targetInputEl = {location: 'targetLocation', lat: 'targetLat', lng: 'targetLng'};
     var isDirection = false;
     var travel_mode = google.maps.TravelMode.DRIVING;
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -62,6 +62,8 @@ function initMap() {
                 targetPositionMarker.setPosition(event.latLng);
                 targetPositionMarker.setDraggable(true);
                 geocodeLatLng(geocoder, map, event.latLng, destination_input, targetInputEl, destination_place);
+                route(origin_place.address, destination_place.address, travel_mode,
+                    directionsService, directionsDisplay);
             }
             route(origin_place.address, destination_place.address, travel_mode,
                 directionsService, directionsDisplay);
@@ -105,7 +107,8 @@ function initMap() {
         currentPositionMarker.setPosition(place.geometry.location);
         currentPositionMarker.setDraggable(true);
         document.getElementById(currentInputEl.location).innerHTML = place.formatted_address;
-        document.getElementById(currentInputEl.latlng).value = place.geometry.location;
+        document.getElementById(currentInputEl.lat).value = place.geometry.location.lat();
+        document.getElementById(currentInputEl.lng).value = place.geometry.location.lng();
         // If the place has a geometry, store its place ID and route if we have
         // the other place ID
         origin_place.address = place.formatted_address;
@@ -124,7 +127,8 @@ function initMap() {
         targetPositionMarker.setPosition(place.geometry.location);
         targetPositionMarker.setDraggable(true);
         document.getElementById(targetInputEl.location).innerHTML = place.formatted_address;
-        document.getElementById(targetInputEl.latlng).value = place.geometry.location;
+        document.getElementById(targetInputEl.lat).value = place.geometry.location.lat();
+        document.getElementById(targetInputEl.lng).value = place.geometry.location.lng();
         // If the place has a geometry, store its place ID and route if we have
         // the other place ID
         destination_place.address = place.formatted_address;
@@ -160,8 +164,10 @@ function initMap() {
         destination_input.value = response.routes[0].legs[response.routes[0].legs.length-1].end_address;
         document.getElementById(currentInputEl.location).innerHTML = response.routes[0].legs[0].start_address;
         document.getElementById(targetInputEl.location).innerHTML = response.routes[0].legs[response.routes[0].legs.length-1].end_address;
-        document.getElementById(currentInputEl.latlng).value = response.routes[0].legs[0].start_location;
-        document.getElementById(targetInputEl.latlng).value = response.routes[0].legs[response.routes[0].legs.length-1].end_location;
+        document.getElementById(currentInputEl.lat).value = response.routes[0].legs[0].start_location.lat();
+        document.getElementById(currentInputEl.lng).value = response.routes[0].legs[0].start_location.lng();
+        document.getElementById(targetInputEl.lat).value = response.routes[0].legs[response.routes[0].legs.length-1].end_location.lat();
+        document.getElementById(targetInputEl.lng).value = response.routes[0].legs[response.routes[0].legs.length-1].end_location.lng();
     });
 
     function geocodeLatLng(geocoder, map, latlng, input, locationSpan, place) {
@@ -173,7 +179,8 @@ function initMap() {
                     place.address = results[0].formatted_address;
                     input.value = place.address;
                     document.getElementById(locationSpan.location).innerHTML = place.address;
-                    document.getElementById(locationSpan.latlng).value = results[0].geometry.location;
+                    document.getElementById(locationSpan.lat).value = results[0].geometry.location.lat();
+                    document.getElementById(locationSpan.lng).value = results[0].geometry.location.lng();
                 } else {
                     window.alert('No results found');
                 }

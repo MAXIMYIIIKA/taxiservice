@@ -10,53 +10,94 @@
     <schema id="6" name="test" />
     <table id="7" parent="1" name="user_roles" />
     <table id="8" parent="1" name="users" />
-    <column id="9" parent="7" name="user_role_id">
+    <table id="9" parent="1" name="orders" />
+    <column id="10" parent="7" name="user_role_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="10" parent="7" name="username">
+    <column id="11" parent="7" name="username">
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="11" parent="7" name="role">
+    <column id="12" parent="7" name="role">
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <key id="12" parent="7" name="PRIMARY">
+    <key id="13" parent="7" name="PRIMARY">
       <columns>user_role_id</columns>
       <primary>1</primary>
     </key>
-    <column id="13" parent="8" name="userId">
+    <column id="14" parent="8" name="userId">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="14" parent="8" name="username">
+    <column id="15" parent="8" name="username">
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="15" parent="8" name="password">
+    <column id="16" parent="8" name="password">
       <mandatory>1</mandatory>
       <data-type>varchar(100)|0</data-type>
     </column>
-    <column id="16" parent="8" name="enabled">
+    <column id="17" parent="8" name="enabled">
       <mandatory>1</mandatory>
       <data-type>tinyint(4)|0</data-type>
       <default-expression>'1'</default-expression>
     </column>
-    <index id="17" parent="8" name="users_username_uindex">
+    <index id="18" parent="8" name="users_username_uindex">
       <columns>username</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="18" parent="8" name="PRIMARY">
+    <key id="19" parent="8" name="PRIMARY">
       <columns>userId</columns>
       <primary>1</primary>
     </key>
-    <key id="19" parent="8" name="users_username_uindex">
+    <key id="20" parent="8" name="users_username_uindex">
       <columns>username</columns>
       <underlying-index>users_username_uindex</underlying-index>
+    </key>
+    <column id="21" parent="9" name="orderId">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="22" parent="9" name="username">
+      <mandatory>1</mandatory>
+      <data-type>varchar(25)|0</data-type>
+    </column>
+    <column id="23" parent="9" name="currLat">
+      <mandatory>1</mandatory>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="24" parent="9" name="currLng">
+      <mandatory>1</mandatory>
+      <data-type>double|0</data-type>
+    </column>
+    <column id="25" parent="9" name="targLat">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="26" parent="9" name="targLng">
+      <data-type>double|0</data-type>
+    </column>
+    <column id="27" parent="9" name="date">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="28" parent="9" name="status">
+      <mandatory>1</mandatory>
+      <data-type>varchar(30)|0</data-type>
+      <default-expression>'PROCESSING'</default-expression>
+    </column>
+    <column id="29" parent="9" name="phone">
+      <mandatory>1</mandatory>
+      <data-type>varchar(13)|0</data-type>
+    </column>
+    <key id="30" parent="9" name="PRIMARY">
+      <columns>orderId</columns>
+      <primary>1</primary>
     </key>
   </database-model>
 </dataSource>

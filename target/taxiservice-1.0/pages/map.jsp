@@ -12,8 +12,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>map</title>
     <link rel="stylesheet" href="resources/css/style.css">
-    <script src="resources/js/jquery-3.1.0.js"></script>
-    <script src="resources/js/map.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-3.1.0.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.maskedinput-1.2.2.js"></script>
+    <script type="text/javascript" src="resources/js/map.js"></script>
+    <script type="text/javascript" src="resources/js/order.js"></script>
 </head>
 <body>
 <input id="origin-input" class="controls" type="text"
@@ -39,11 +41,15 @@
     <sec:csrfInput />
     <p><label for="currentLocation">Current location: </label>
     <span id="currentLocation"></span></p>
-    <input type="hidden" id="currentLatLng" name="currentLatLng">
+    <input type="hidden" id="currentLat" name="currentLat">
+    <input type="hidden" id="currentLng" name="currentLng">
     <p><label for="targetLocation">Target location: </label>
     <span id="targetLocation"></span></p>
-    <input type="hidden" id="targetLatLng" name="targetLatLng">
+    <input type="hidden" id="targetLat" name="targetLat">
+    <input type="hidden" id="targetLng" name="targetLng">
 <p>Total Distance: <span id="total"></span></p>
+    <p>Phone number: +375
+    <input type="tel" id="phone" name="phone" pattern="^[0-9]+$"></p>
     <input type="submit" id="submitRoute">
 </form>
 <a href="?lang=ru">RU</a>

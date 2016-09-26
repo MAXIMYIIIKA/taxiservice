@@ -1,7 +1,6 @@
 package by.nichipor.taxiservice.service.adminpanel.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import by.nichipor.taxiservice.service.usermanager.UserManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/admin")
 public class AdminPanelController {
+    private static final String ADMIN_PAGE = "admin";
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String adminPage(Model ui) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        ui.addAttribute("user", username);
-        return "admin";
+        ui.addAttribute("user", UserManager.getCurrentUsername());
+        return ADMIN_PAGE;
     }
 }

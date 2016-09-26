@@ -1,12 +1,12 @@
 package by.nichipor.taxiservice.database.dao;
 
+import by.nichipor.taxiservice.database.config.DBConnPool;
 import by.nichipor.taxiservice.entity.Role;
 import by.nichipor.taxiservice.entity.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,169 +33,197 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_INSERT_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
     private static final String SQL_UPDATE_USER = "UPDATE users SET username = ?, password = ?, enabled = ? WHERE userId = ?";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username = ? AND userId = ?";
+    private static final String USER_ID_FIELD = "userId";
+    private static final String USERNAME_FIELD = "username";
+    private static final String PASSWORD_FIELD = "password";
+    private static final String ENABLED_FIELD = "enabled";
+    private static final String ROLE_FIELD = "role";
+
 
     @Autowired
-    private DataSource dataSource;
+    private DBConnPool dbConnPool;
 
     @Override
-    public List<User> findAllUsers() {
+    public List<User> findAllUsers() throws InterruptedException{
         List<User> users = new ArrayList<>();
         User tempUser;
-        try(Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS)){
+        Connection connection = dbConnPool.getConnection();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS)) {
             while (resultSet.next()) {
-                tempUser = new User(resultSet.getInt("userId"),
-                                    resultSet.getString("username"),
-                                    resultSet.getString("password"),
-                                    resultSet.getBoolean("enabled"));
+                tempUser = new User(resultSet.getInt(USER_ID_FIELD),
+                        resultSet.getString(USERNAME_FIELD),
+                        resultSet.getString(PASSWORD_FIELD),
+                        resultSet.getBoolean(ENABLED_FIELD));
                 users.add(tempUser);
             }
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return users;
     }
 
     @Override
-    public Map<String,List<Role>> findAllRoles() {
+    public Map<String,List<Role>> findAllRoles() throws InterruptedException {
         Map<String,List<Role>> roles = new HashMap<>();
-        try(Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
+        Connection connection = dbConnPool.getConnection();
+        try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_USER_ROLES)){
             while (resultSet.next()) {
-                if (roles.containsKey(resultSet.getString("username"))) {
-                    roles.get(resultSet.getString("username")).add(Role.valueOf(resultSet.getString("role")));
+                if (roles.containsKey(resultSet.getString(USERNAME_FIELD))) {
+                    roles.get(resultSet.getString(USERNAME_FIELD)).add(Role.valueOf(resultSet.getString(ROLE_FIELD)));
                 } else {
-                    roles.put(resultSet.getString("username"), new ArrayList<>());
-                    roles.get(resultSet.getString("username")).add(Role.valueOf(resultSet.getString("role")));
+                    roles.put(resultSet.getString(USERNAME_FIELD), new ArrayList<>());
+                    roles.get(resultSet.getString(USERNAME_FIELD)).add(Role.valueOf(resultSet.getString(ROLE_FIELD)));
                 }
             }
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return roles;
     }
 
     @Override
-    public User findUserById(int userId) {
+    public User findUserById(int userId) throws InterruptedException{
         User user = null;
         ResultSet resultSet;
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_ID)){
+        Connection connection = dbConnPool.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_ID)){
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            user = new User(resultSet.getInt("userId"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getBoolean("enabled"));
+            user = new User(resultSet.getInt(USER_ID_FIELD),
+                            resultSet.getString(USERNAME_FIELD),
+                            resultSet.getString(PASSWORD_FIELD),
+                            resultSet.getBoolean(ENABLED_FIELD));
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return user;
     }
 
     @Override
-    public User findUserByUsername(String username) {
+    public User findUserByUsername(String username) throws InterruptedException{
         User user = null;
         ResultSet resultSet;
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_USERNAME)){
+        Connection connection = dbConnPool.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_USERNAME)){
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            user = new User(resultSet.getInt("userId"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getBoolean("enabled"));
+            user = new User(resultSet.getInt(USER_ID_FIELD),
+                    resultSet.getString(USERNAME_FIELD),
+                    resultSet.getString(PASSWORD_FIELD),
+                    resultSet.getBoolean(ENABLED_FIELD));
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return user;
     }
 
     @Override
-    public List<Role> findUserRoles(User user) {
+    public List<Role> findUserRoles(User user) throws InterruptedException{
         List<Role> roles = new ArrayList<>();
         ResultSet resultSet;
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_ROLES)){
+        Connection connection = dbConnPool.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_ROLES)){
             preparedStatement.setString(1, user.getUsername());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                roles.add(Role.valueOf(resultSet.getString("role")));
+                roles.add(Role.valueOf(resultSet.getString(ROLE_FIELD)));
             }
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return roles;
     }
 
-    private boolean updateUserRole(User user, Role role, String sqlQuery) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+    private boolean updateUserRole(User user, Role role, String sqlQuery) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, role.name());
-            return preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return false;
     }
 
     @Override
-    public boolean addUserRole(User user, Role role) {
+    public boolean addUserRole(User user, Role role) throws InterruptedException {
         return updateUserRole(user, role, SQL_INSERT_USER_ROLE);
     }
 
     @Override
-    public boolean deleteUserRole(User user, Role role) {
+    public boolean deleteUserRole(User user, Role role) throws InterruptedException {
         return updateUserRole(user, role, SQL_DELETE_USER_ROLE);
     }
 
     @Override
-    public boolean deleteAllUserRoles(User user) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_USER_ROLES)) {
+    public boolean deleteAllUserRoles(User user) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_USER_ROLES)) {
             preparedStatement.setString(1, user.getUsername());
-            return preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return false;
     }
 
     @Override
-    public boolean createUser(User user) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_USER)) {
+    public boolean createUser(User user) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
-            return preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return false;
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER)) {
+    public boolean deleteUser(User user) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setInt(2, user.getUserId());
-            return preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return false;
     }
 
     @Override
-    public boolean updateUser(User user) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER)) {
+    public boolean updateUser(User user) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             if (user.isEnabled()) {
@@ -204,9 +232,12 @@ public class UserDAOImpl implements UserDAO {
                 preparedStatement.setInt(3, 0);
             }
             preparedStatement.setInt(4, user.getUserId());
-            return preparedStatement.execute();
+            preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
         }
         return false;
     }

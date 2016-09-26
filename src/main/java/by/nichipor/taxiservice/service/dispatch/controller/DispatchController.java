@@ -2,7 +2,7 @@ package by.nichipor.taxiservice.service.dispatch.controller;
 
 import by.nichipor.taxiservice.entity.Order;
 import by.nichipor.taxiservice.entity.OrderStatus;
-import by.nichipor.taxiservice.service.notifier.DeferredResultService;
+import by.nichipor.taxiservice.service.notifier.DispatcherNotifier;
 import by.nichipor.taxiservice.service.notifier.Notifier;
 import by.nichipor.taxiservice.service.ordermananger.OrderManager;
 import org.apache.log4j.Logger;
@@ -25,6 +25,8 @@ import java.util.*;
 public class DispatchController {
     private static Logger logger = Logger.getLogger(DispatchController.class);
 
+    private static final String DISPATCH_PAGE = "dispatch";
+
     @Autowired
     private volatile OrderManager orderManager;
 
@@ -33,7 +35,7 @@ public class DispatchController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String test() {
-        return "dispatch";
+        return DISPATCH_PAGE;
     }
 
     @RequestMapping(value = "ajaxShowOrders")
@@ -47,11 +49,11 @@ public class DispatchController {
     @RequestMapping(value = "ajaxCheck")
     @ResponseBody
     public DeferredResult<String> check() throws InterruptedException{
-        DeferredResultService resultService = new DeferredResultService();
-        notifier.registerDispatcher(resultService);
+        DispatcherNotifier dispatcher = new DispatcherNotifier();
+        notifier.registerDispatcher(dispatcher);
         DeferredResult<String> result = new DeferredResult<>();
-        resultService.getUpdate(result);
-        logger.debug("getUpdate(" + result.hashCode() + ") called on " + resultService.hashCode()
+        dispatcher.getUpdate(result);
+        logger.debug("getUpdate(" + result.hashCode() + ") called on " + dispatcher.hashCode()
                         + "; Return value = " + result.getResult());
         return result;
     }
@@ -64,7 +66,6 @@ public class DispatchController {
         Order order = orderManager.getOrderById(orderId);
         logger.debug(this.hashCode() + ": CONTROLLER order : " + order.toString());
         orderManager.changeOrderStatus(order, OrderStatus.valueOf(status));
-//        notifier.addNewStatusNotification();
         return true;
     }
 }

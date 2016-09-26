@@ -95,4 +95,34 @@
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<groups>
+						<group>
+							<title>Database</title>
+							<packages>by.nichipor.taxiservice.database*</packages>
+						</group>
+						<group>
+							<title>Entities</title>
+							<packages>by.nichipor.taxiservice.entity*</packages>
+						</group>
+						<group>
+							<title>Security</title>
+							<packages>by.nichipor.taxiservice.security*</packages>
+						</group>
+						<group>
+							<title>Services</title>
+							<packages>by.nichipor.taxiservice.service*</packages>
+						</group>
+					</groups>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 </project>

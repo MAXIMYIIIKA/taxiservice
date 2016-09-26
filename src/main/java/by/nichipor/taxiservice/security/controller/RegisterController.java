@@ -9,6 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.Locale;
 
@@ -19,6 +23,7 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+    private static final String REGISTER_PAGE = "register";
 
     @Autowired
     MessageSource messageSource;
@@ -28,21 +33,36 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String registerPage(Model ui) {
-        return "register";
+        return REGISTER_PAGE;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String registerUser(@RequestParam("username") String username,
                                @RequestParam("password") String password,
+                               @RequestParam("confPassword") String confPassword,
                                Locale locale,
                                Model ui) {
         User user = new User(username, password);
-        if (userManager.registerUser(user)){
-            ui.addAttribute("success", username
-                                        + messageSource.getMessage("register.success", null, locale));
+        if (password.equals(confPassword) && userManager.registerUser(user)) {
+            ui.addAttribute("success", username + messageSource.getMessage("register.success", null, locale));
         } else {
             ui.addAttribute("error", messageSource.getMessage("register.error", null, locale));
         }
-        return "register";
+        ui.addAttribute("function", "<script>visible();</script>");
+        return REGISTER_PAGE;
+    }
+
+    @RequestMapping(value = "passwordsDontMatchMessage", method = RequestMethod.GET,
+            produces = "text/html; charset=utf-8")
+    @ResponseBody
+    public String getPasswordDontMatchErrorMessage(){
+        return messageSource.getMessage("register.passwords_dont_match", null, RequestContextUtils.getLocale(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()));
+    }
+
+    @RequestMapping(value = "emptyUsername", method = RequestMethod.GET,
+            produces = "text/html; charset=utf-8")
+    @ResponseBody
+    public String emptyUsernameErrorMessage(){
+        return messageSource.getMessage("invalid_username", null, RequestContextUtils.getLocale(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()));
     }
 }

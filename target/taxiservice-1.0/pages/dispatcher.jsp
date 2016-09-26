@@ -12,25 +12,37 @@
 <html>
 <head>
     <title>dispatcher</title>
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" >
+    <script src="<c:url value="/resources/js/jquery-3.1.0.js" />" ></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/common.js" />" ></script>
 </head>
 <body>
+<c:import url="upperPanel.jsp" />
+<div id="parent-alert" class="hidden">
+    <div class="alert">
+        <div class="alert-error">
+            ${error}
+        </div>
+        <div class="alert-success">
+            ${success}
+        </div>
+        ${function}
+    </div>
+</div>
 <div>
-    <div class="alert alert-success">
-        ${success}
-    </div>
-    <div class="alert alert-error">
-        ${error}
-    </div>
-    <table class="userlist">
-        <tr class="table-header">
+    <table class="simple-table entityList">
+        <tr>
+            <td></td>
+            <td class="table-header" colspan="7"><spring:message code="orders" /></td>
+        </tr>
+        <tr>
             <th>id</th>
             <th><spring:message code="username" /></th>
-            <th>Current position</th>
-            <th>Target position</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Phone</th>
+            <th><spring:message code="order.current_position" /></th>
+            <th><spring:message code="order.target_position" /></th>
+            <th><spring:message code="date" /></th>
+            <th><spring:message code="status" /></th>
+            <th><spring:message code="phone" /></th>
         </tr>
         <c:forEach var="order" items="${orders}">
             <tr>
@@ -41,26 +53,10 @@
                 <td>${order.dateTime.date} ${order.dateTime.time}</td>
                 <td>${order.status}</td>
                 <td>${order.phone}</td>
-                <%--<td>--%>
-                    <%--<form>--%>
-                        <%--<button type="submit" value="${user.username}" name="delete"><spring:message code="delete_button"/></button>--%>
-                        <%--<c:choose>--%>
-                            <%--<c:when test="${user.enabled}">--%>
-                                <%--<button type="submit" value="${user.username}" name="disable"><spring:message code="disable_button"/></button>--%>
-                            <%--</c:when>--%>
-                            <%--<c:otherwise>--%>
-                                <%--<button type="submit" value="${user.username}" name="enable"><spring:message code="enable_button"/></button>--%>
-                            <%--</c:otherwise>--%>
-                        <%--</c:choose>--%>
-                        <%--<button type="submit" value="${user.username}" name="openEditForm"><spring:message code="edit_button"/></button>--%>
-                    <%--</form>--%>
-                <%--</td>--%>
+                <td><form method="get"><button type="submit" value="${order.orderId}" name="deleteOrder"><spring:message code="delete_button" /></button></form></td>
             </tr>
         </c:forEach>
     </table>
-    <form method="get">
-        <input type="submit" value="<spring:message code="usrmanager.showall_button" />" name="showAllOrders">
-    </form>
 </div>
 </body>
 </html>

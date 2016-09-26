@@ -15,7 +15,13 @@ public class User {
     private String password;
     private boolean enabled;
 
-    public User(){}
+
+    /**
+     *  The default constructor is empty because of the Spring Bean Autowiring
+     */
+    public User(){
+        //This default constructor is empty because of the Spring Bean Autowiring
+    }
 
     public User(String username, String password){
         setUserId(-1);
@@ -68,7 +74,6 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 '}';
     }

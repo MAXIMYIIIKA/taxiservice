@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -10,13 +11,11 @@
 <html>
 <head>
     <title><spring:message code="admin.title" /></title>
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
 </head>
 <body>
+<c:import url="upperPanel.jsp" />
 <h1><spring:message code="admin.hello_msg" /> ${user}! </h1>
-<a href="admin/usermanager"><button type="button" class="btn"><spring:message code="usrmanager.title" /></button></a>
-<a href="main"><button type="button" class="btn"><spring:message code="go_main_button" /></button></a>
-<a href="?lang=ru">RU</a>
-<a href="?lang=en">EN</a>
+<a href="<c:url value="/admin/usermanager" />"><button type="button" class="btn"><spring:message code="usrmanager.title" /></button></a>
 </body>
 </html>

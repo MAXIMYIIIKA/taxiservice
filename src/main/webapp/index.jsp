@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -11,6 +12,6 @@
     <title>index</title>
 </head>
 <body>
-<jsp:forward page="main"/>
+<c:redirect url="/main" />
 </body>
 </html>

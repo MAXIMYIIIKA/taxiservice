@@ -2,16 +2,17 @@ package by.nichipor.taxiservice.service.orderpanel.controller;
 
 import by.nichipor.taxiservice.entity.Location;
 import by.nichipor.taxiservice.entity.Order;
-import by.nichipor.taxiservice.service.notifier.Notifier;
 import by.nichipor.taxiservice.service.ordermananger.OrderManager;
+import by.nichipor.taxiservice.service.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Locale;
 
 /**
  * Created by Max Nichipor on 26.08.2016.
@@ -20,45 +21,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/order")
 public class OrderPanelController {
+    private static final String ORDER_PANEL_PAGE = "map";
 
     @Autowired
     OrderManager orderManager;
 
-//    @Autowired
-//    private Notifier notifier;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showMap(Model ui){
         ui.addAttribute("placeOut", "&origin=Belarus");
-        return "map";
+        return ORDER_PANEL_PAGE;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String makeOrder(@RequestParam("currentLat") Double currentLat,
-                          @RequestParam("currentLng") Double currentLng,
-                          @RequestParam("targetLat") Double targetLat,
-                          @RequestParam("targetLng") Double targetLng,
-                            @RequestParam("phone") String phone, Model ui){
-        Location currentLocation = new Location(currentLat, currentLng);
-        Location targetLocation;
-        if (targetLat != null && targetLng != null) {
-            targetLocation = new Location(targetLat, targetLng);
+                            @RequestParam("currentLng") Double currentLng,
+                            @RequestParam("targetLat") Double targetLat,
+                            @RequestParam("targetLng") Double targetLng,
+                            @RequestParam("phone") String phone, Locale locale, Model ui){
+        boolean errors = false;
+        if (currentLat != null && currentLng != null){
+            Location currentLocation = new Location(currentLat, currentLng);
+            Location targetLocation;
+            if (targetLat != null && targetLng != null) {
+                targetLocation = new Location(targetLat, targetLng);
+            } else {
+                targetLocation = new Location(0,0);
+            }
+            if (orderManager.addOrder(new Order(UserManager.getCurrentUsername(), currentLocation, targetLocation, "+375" + phone))){
+                ui.addAttribute("success", messageSource.getMessage("orderpanel.order_success", null, locale));
+            } else {
+                errors = true;
+            }
         } else {
-            targetLocation = new Location(0,0);
+            errors = true;
         }
-        orderManager.addOrder(new Order(getCurrentUsername(), currentLocation, targetLocation, "+375" + phone));
-//        notifier.addNewOrderNotification();
-        return "map";
-    }
-
-    private String getCurrentUsername(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
+        if (errors){
+            ui.addAttribute("error", messageSource.getMessage("orderpanel.order_error", null, locale));
         }
-        return username;
+        ui.addAttribute("function", "<script>visible();</script>");
+        return ORDER_PANEL_PAGE;
     }
 }

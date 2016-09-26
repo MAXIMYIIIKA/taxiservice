@@ -1,9 +1,5 @@
 package by.nichipor.taxiservice.entity;
 
-
-import java.sql.Date;
-import java.sql.Time;
-
 /**
  * Created by Max Nichipor on 21.08.2016.
  */

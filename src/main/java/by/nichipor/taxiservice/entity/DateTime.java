@@ -11,8 +11,8 @@ public class DateTime {
     private Time time;
 
     public DateTime (Date date, Time time) {
-        this.date = date;
-        this.time = time;
+        this.date = (Date) date.clone();
+        this.time = (Time) time.clone();
     }
 
     public static DateTime getCurrentDateTime(){
@@ -21,18 +21,23 @@ public class DateTime {
     }
 
     public Date getDate() {
-        return date;
+        return (Date) date.clone();
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = (Date) date.clone();
     }
 
     public Time getTime() {
-        return time;
+        return (Time) time.clone();
     }
 
     public void setTime(Time time) {
-        this.time = time;
+        this.time = (Time) time.clone();
+    }
+
+    @Override
+    public String toString() {
+        return date + " " + time;
     }
 }

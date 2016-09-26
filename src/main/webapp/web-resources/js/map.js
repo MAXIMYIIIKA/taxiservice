@@ -17,7 +17,6 @@ function initMap() {
 
     var origin_input = document.getElementById('origin-input');
     var destination_input = document.getElementById('destination-input');
-    // var modes = document.getElementById('mode-selector');
 
     var currentPositionMarker = new google.maps.Marker();
     var targetPositionMarker = new google.maps.Marker();
@@ -30,7 +29,6 @@ function initMap() {
 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
-    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(modes);
 
     currentPositionMarker.addListener('click', function () {
         this.setMap(null);
@@ -74,18 +72,6 @@ function initMap() {
     origin_autocomplete.bindTo('bounds', map);
     var destination_autocomplete = new google.maps.places.Autocomplete(destination_input);
     destination_autocomplete.bindTo('bounds', map);
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    // function setupClickListener(id, mode) {
-    //     var radioButton = document.getElementById(id);
-    //     radioButton.addEventListener('click', function() {
-    //         travel_mode = mode;
-    //     });
-    // }
-    // setupClickListener('changemode-walking', google.maps.TravelMode.WALKING);
-    // setupClickListener('changemode-transit', google.maps.TravelMode.TRANSIT);
-    // setupClickListener('changemode-driving', google.maps.TravelMode.DRIVING);
 
     function expandViewportToFitPlace(map, place) {
         if (place.geometry.viewport) {

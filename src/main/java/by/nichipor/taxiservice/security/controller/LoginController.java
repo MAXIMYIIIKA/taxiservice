@@ -16,24 +16,27 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+    private static final String LOGIN_PAGE = "login";
 
     @Autowired
     MessageSource messageSource;
 
     @RequestMapping(method = RequestMethod.GET)
     public String loginPage(Model ui){
-        return "login";
+        return LOGIN_PAGE;
     }
 
     @RequestMapping(params = {"logout"},method = RequestMethod.GET)
-    public String logoutSuccess(Locale locale, Model ui){
-        ui.addAttribute("logout", messageSource.getMessage("login.logout", null, locale));
-        return "login";
+    public void logoutSuccess(Locale locale, Model ui){
+        ui.addAttribute("success", messageSource.getMessage("login.logout", null, locale));
+        ui.addAttribute("function", "<script>visible();</script>");
+        loginPage(ui);
     }
 
     @RequestMapping(params = {"error"},method = RequestMethod.GET)
-    public String loginError(Locale locale, Model ui){
+    public void loginError(Locale locale, Model ui){
         ui.addAttribute("error", messageSource.getMessage("login.error", null, locale));
-        return "login";
+        ui.addAttribute("function", "<script>visible();</script>");
+        loginPage(ui);
     }
 }

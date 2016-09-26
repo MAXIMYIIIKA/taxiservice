@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/403")
 public class AccessDeniedController {
+    private static final String ACCESS_DENIED_PAGE = "403";
 
     @RequestMapping(method = RequestMethod.GET)
-    public String accessDenied(Model ui){
-        return "403";
+    public String accessDenied(){
+        return ACCESS_DENIED_PAGE;
     }
 }

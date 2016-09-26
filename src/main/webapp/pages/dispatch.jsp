@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -10,22 +11,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>test</title>
+    <title>dispatch</title>
     <sec:csrfMetaTags />
-    <link rel="stylesheet" href="resources/css/style.css">
-    <script src="resources/js/jquery-3.1.0.js"></script>
-    <script src="resources/js/dispatch.js"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" >
+    <script src="<c:url value="/resources/js/jquery-3.1.0.js" />" ></script>
+    <script src="<c:url value="/resources/js/dispatch.js" />" ></script>
 </head>
 <body>
-    <table id="new-orders" style="border: 3px solid">
-        <tr class="table-header">
+<c:import url="upperPanel.jsp" />
+    <table id="new-orders" class="simple-table">
+        <tr>
+            <td></td>
+            <td class="table-header" colspan="7"><spring:message code="orders" /></td>
+        </tr>
+        <tr>
             <th>id</th>
             <th><spring:message code="username" /></th>
-            <th>Current position</th>
-            <th>Target position</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Phone</th>
+            <th><spring:message code="order.current_position" /></th>
+            <th><spring:message code="order.target_position" /></th>
+            <th><spring:message code="date" /></th>
+            <th><spring:message code="status" /></th>
+            <th><spring:message code="phone" /></th>
         </tr>
     </table>
     <div id="new-order"><div id="new-order-sound"></div></div>

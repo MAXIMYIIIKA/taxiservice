@@ -1,9 +1,11 @@
 by.nichipor.taxiservice.database.config
 by.nichipor.taxiservice.database.dao
 by.nichipor.taxiservice.entity
+by.nichipor.taxiservice.entity.type
 by.nichipor.taxiservice.security.config
 by.nichipor.taxiservice.security.controller
 by.nichipor.taxiservice.service.adminpanel.controller
+by.nichipor.taxiservice.service.converter
 by.nichipor.taxiservice.service.dispatch.controller
 by.nichipor.taxiservice.service.dispatcherpanel.controller
 by.nichipor.taxiservice.service.main.controller

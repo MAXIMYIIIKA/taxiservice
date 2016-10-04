@@ -1,6 +1,6 @@
 package by.nichipor.taxiservice.database.dao;
 
-import by.nichipor.taxiservice.entity.DateTime;
+import by.nichipor.taxiservice.entity.type.DateTime;
 import by.nichipor.taxiservice.entity.Order;
 import by.nichipor.taxiservice.entity.OrderStatus;
 import by.nichipor.taxiservice.entity.User;
@@ -38,23 +38,6 @@ public interface OrderDAO {
      * @throws InterruptedException if interrupted while getting connection.
      */
     List<Order> findOrdersByPhone(String phone) throws InterruptedException;
-
-    /**
-     * This method is used to find orders in database from that time till specified date.
-     * @param dateTime the end of the period.
-     * @return a list of orders.
-     * @throws InterruptedException if interrupted while getting connection.
-     */
-    List<Order> findOrdersTillDate(DateTime dateTime) throws InterruptedException;
-
-    /**
-     * This method is used to find orders in database for the specified period.
-     * @param fromDateTime the start of the period.
-     * @param toDateTime the end of the period.
-     * @return a list of orders.
-     * @throws InterruptedException if interrupted while getting connection.
-     */
-    List<Order> findOrdersByPeriod(DateTime fromDateTime, DateTime toDateTime) throws InterruptedException;
 
     /**
      * This method is used to list all user's orders from database.
@@ -99,14 +82,6 @@ public interface OrderDAO {
      * @throws InterruptedException if interrupted while getting connection.
      */
     boolean deleteOrder(Order order) throws InterruptedException;
-
-    /**
-     * This method is used for deleting all denied orders from the database.
-     * @return true if orders deleted successfully;
-     * false if it is not.
-     * @throws InterruptedException if interrupted while getting connection.
-     */
-    boolean deleteAllDeniedOrders() throws InterruptedException;
 
     /**
      * This method is used to change the status of the specified order.

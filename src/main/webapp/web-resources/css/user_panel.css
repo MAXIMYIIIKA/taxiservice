@@ -1,0 +1,93 @@
+div#user-info {
+    width: 100%;
+    color: white;
+    border: 2px solid;
+    display: inherit;
+    background: rgb(224, 224, 224);
+    text-shadow: 1px 1px 2px black;
+}
+
+div#avatar {
+    width: 110px;
+    height: 109px;
+    border: 1px solid;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+#parent-user-info{
+    display: flex;
+    max-width: 900px;
+}
+
+#username{
+    margin: auto 0;
+}
+
+#change-avatar{
+    /*margin-top: 111px;*/
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0.3s, visibility 0.3s linear 0.3s, margin-top 0.3s 0.3s;
+}
+
+#avatar:hover > #change-avatar{
+    margin-top: -21px;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+#imgInput {
+    position: relative;
+    width: 100%;
+    background: rgba(29,32,34,.7);
+    text-align: center;
+    cursor: pointer;
+}
+
+#image{
+    width: 112px;
+    height: 112px;
+}
+
+#deleteBtn {
+    width: 18px;
+    height: 18px;
+    border: none;
+    padding: 0;
+    position: absolute;
+    background: rgba(29,32,34,.7);
+    margin-left: 92px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0.3s, visibility 0.3s linear 0.3s, margin-top 0.3s 0.3s;
+}
+
+#avatar:hover > form > #deleteBtn{
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+#deleteBtn span {
+    display: block;
+    height: 3px;
+    background: white;
+    margin: 0 auto;
+    width: 14px;
+    text-indent: -9999px;
+    position: relative;
+    transform: rotate(45deg);
+}
+
+#deleteBtn span::before {
+    display: block;
+    position: absolute;
+    height: 3px;
+    content: "";
+    width: 100%;
+    background: white;
+    transform: rotate(-90deg);
+}

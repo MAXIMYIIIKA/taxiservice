@@ -12,10 +12,11 @@
 <head>
     <title><spring:message code="admin.title" /></title>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
+    <link rel="stylesheet" href="<c:url value="/resources/css/main_page.css" />" />
 </head>
 <body>
 <c:import url="upperPanel.jsp" />
-<h1><spring:message code="admin.hello_msg" /> ${user}! </h1>
-<a href="<c:url value="/admin/usermanager" />"><button type="button" class="btn"><spring:message code="usrmanager.title" /></button></a>
+<h1 id="main-message"><spring:message code="admin.hello_msg" /> ${user}! </h1>
+<a href="<c:url value="/admin/usermanager" />"><button type="button" class="btn"><spring:message code="usrmanager" /></button></a>
 </body>
 </html>

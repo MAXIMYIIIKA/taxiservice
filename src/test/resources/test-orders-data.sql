@@ -1,0 +1,3 @@
+INSERT INTO orders (username, currLocationId, targLocationId, date, status, phone) VALUES ('user', 1, 2, '2016-09-15 09:19:34', 'ACCEPTED', '+375(29)354-61-73');
+INSERT INTO orders (username, currLocationId, targLocationId, date, status, phone) VALUES ('user', 3, 4, '2016-10-04 14:26:18', 'DENIED', 'test');
+INSERT INTO orders (username, currLocationId, targLocationId, date, status, phone) VALUES ('test', 5, 6, '2016-10-04 14:26:18', 'DENIED', 'egasdf');

@@ -1,0 +1,6 @@
+INSERT INTO locations (lat, lng) VALUES (53.9028986, 27.500890199999958);
+INSERT INTO locations (lat, lng) VALUES (34.6545634, 34.6475);
+INSERT INTO locations (lat, lng) VALUES (23.353523, 354.23423);
+INSERT INTO locations (lat, lng) VALUES (53.2342634, 345.23423);
+INSERT INTO locations (lat, lng) VALUES (53.9064018, 27.51989900000001);
+INSERT INTO locations (lat, lng) VALUES (0, 0);

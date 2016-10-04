@@ -14,6 +14,9 @@ import javax.sql.DataSource;
  * Created by Max Nichipor on 08.08.2016.
  */
 
+/**
+ * This is a Spring Security configuration class.
+ */
 @EnableWebSecurity
 @ComponentScan("by.nichipor.taxiservice")
 public class SecurityConfig extends WebSecurityConfigurerAdapter{

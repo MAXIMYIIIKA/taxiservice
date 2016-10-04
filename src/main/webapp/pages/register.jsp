@@ -35,9 +35,9 @@
             <sec:csrfInput />
             <legend><spring:message code="register.legend" /></legend>
 
-            <input type="text" id="username" name="username" placeholder="<spring:message code="username" />" autofocus/><br/>
-            <input type="password" id="password" name="password" placeholder="<spring:message code="password" />"/><br/>
-            <input type="password" id="confPassword" name="confPassword" placeholder="<spring:message code="confPassword" />"/>
+            <input type="text" id="username" name="username" placeholder="<spring:message code="username" />" autofocus required/><br/>
+            <input type="password" id="password" name="password" placeholder="<spring:message code="password" />" required/><br/>
+            <input type="password" id="confPassword" name="confPassword" placeholder="<spring:message code="confPassword" />" required/>
             <div class="form-actions">
                 <button type="submit" class="btn"><spring:message code="register_button" /></button>
                 <a href="login"><button type="button" class="btn"><spring:message code="login_button" /></button></a>

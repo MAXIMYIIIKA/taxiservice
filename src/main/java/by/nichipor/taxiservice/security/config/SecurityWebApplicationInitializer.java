@@ -5,8 +5,21 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 /**
  * Created by Max Nichipor on 08.08.2016.
  */
-public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
 
+/**
+ * This class register Spring Security with the existing ApplicationContext.
+ * <p>
+ *     This would register the springSecurityFilterChain Filter
+ *     for every URL in the application.
+ * </p>
+ */
+public class SecurityWebApplicationInitializer
+        extends AbstractSecurityWebApplicationInitializer {
+
+    /**
+     * This method adds a ContextLoaderListener
+     * that loads the {@link SecurityConfig SecurityConfig}.
+     */
     public SecurityWebApplicationInitializer() {
         super(SecurityConfig.class);
     }

@@ -7,8 +7,6 @@ body{
     overflow: auto;
     white-space: nowrap;
     text-align: center;
-    /*background: url("../images/main_background.jpg") no-repeat 50% fixed;*/
-    /*background-size: cover;*/
 }
 
 #main-message{

@@ -11,10 +11,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>dispatcher</title>
+    <title><spring:message code="dispatcher" /></title>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" >
     <script src="<c:url value="/resources/js/jquery-3.1.0.js" />" ></script>
     <script type="text/javascript" src="<c:url value="/resources/js/common.js" />" ></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/converter.js" />" ></script>
 </head>
 <body>
 <c:import url="upperPanel.jsp" />
@@ -48,8 +49,8 @@
             <tr>
                 <td>${order.orderId}</td>
                 <td>${order.username}</td>
-                <td>Lat: ${order.currentLocation.lat}; Lng: ${order.currentLocation.lng}</td>
-                <td>Lat: ${order.targetLocation.lat}; Lng: ${order.targetLocation.lng}</td>
+                <td>${order.currentLocation.degreesMinutesSeconds}</td>
+                <td>${order.targetLocation.degreesMinutesSeconds}</td>
                 <td>${order.dateTime.date} ${order.dateTime.time}</td>
                 <td>${order.status}</td>
                 <td>${order.phone}</td>

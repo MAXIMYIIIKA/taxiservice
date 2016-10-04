@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -308,5 +309,60 @@ public class UserManager {
             username = principal.toString();
         }
         return username;
+    }
+
+    public boolean addAvatar(String username, InputStream inputStream) {
+        try {
+            if (isExist(new User(username, null))) {
+                return userDAO.addAvatar(username, inputStream);
+            }
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
+        return false;
+    }
+
+    public byte[] findAvatar(String username){
+        try {
+            if (isExist(new User(username, null))) {
+                return userDAO.findAvatar(username);
+            }
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
+        return new byte[1];
+    }
+
+    public boolean hasAvatar(String username) {
+        try {
+            if (isExist(new User(username, null))) {
+                return userDAO.hasAvatar(username);
+            }
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
+        return false;
+    }
+
+    public boolean updateAvatar(String username, InputStream inputStream) {
+        try {
+            if (isExist(new User(username, null))) {
+                return userDAO.updateAvatar(username, inputStream);
+            }
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
+        return false;
+    }
+
+    public boolean deleteAvatar(String username){
+        try {
+            if (isExist(new User(username, null))) {
+                return userDAO.deleteAvatar(username);
+            }
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
+        return false;
     }
 }

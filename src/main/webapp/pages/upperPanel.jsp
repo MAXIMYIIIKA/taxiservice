@@ -25,10 +25,11 @@
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_USER')">
             <a href="<c:url value="/order" />" ><button type="button" class="btn"><spring:message code="order_button" /></button></a>
+            <a href="<c:url value="/user" />" ><button type="button" class="btn"><spring:message code="user" /></button></a>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_DISPATCHER')">
-            <a href="<c:url value="/dispatch" />" ><button type="button" class="btn"><spring:message code="dispatch_button" /></button></a>
-            <a href="<c:url value="/dispatcher" />" ><button type="button" class="btn"><spring:message code="dispatcher_button" /></button></a>
+            <a href="<c:url value="/dispatch" />" ><button type="button" class="btn"><spring:message code="dispatch" /></button></a>
+            <a href="<c:url value="/dispatcher" />" ><button type="button" class="btn"><spring:message code="dispatcher" /></button></a>
         </sec:authorize>
     </div>
     <div id="right-box">

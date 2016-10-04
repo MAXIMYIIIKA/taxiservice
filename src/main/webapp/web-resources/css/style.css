@@ -1,7 +1,12 @@
 /* COMMON */
 body{
     margin: 0;
-    background: url(../images/main_background.jpg) repeat-y fixed 50% #e4d15b;
+    background: url(../images/main_background.jpg) no-repeat fixed 50%;
+}
+
+#preview{
+    max-width: 93px;
+    max-height: 93px;
 }
 
 .simple-table {
@@ -320,41 +325,7 @@ form{
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/*  MAP  */
-#map {
-    height: 70%;
-    /*z-index: -1;*/
-}
 
-#origin-input,
-#destination-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 200px;
-}
-
-#origin-input:focus,
-#destination-input:focus {
-    border-color: #4d90fe;
-}
-
-#mode-selector {
-    color: #fff;
-    background-color: #4d90fe;
-    margin-left: 12px;
-    padding: 5px 11px 0px 11px;
-}
-
-#mode-selector label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-}
 #new-order{
     width: 100px;
     position: relative;

@@ -195,4 +195,9 @@ function initMap() {
             map: map
         });
     }
+
 }
+
+$(document).ready(function ($) {
+    $("#phone").mask("(99) 999-99-99");
+})

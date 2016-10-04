@@ -16,8 +16,8 @@ var showOrders = function () {
                     string += "<tr class='newOrder'>"
                                 + "<td>" + order.orderId + "</td>"
                                 + "<td>" + order.username + "</td>"
-                                + "<td>" + order.currentLocation.lat + "; " + order.currentLocation.lng + "</td>"
-                                + "<td>" + order.targetLocation.lat + "; " + order.targetLocation.lng + "</td>"
+                                + "<td>" + order.currentLocation.degreesMinutesSeconds +  "</td>"
+                                + "<td>" + order.targetLocation.degreesMinutesSeconds + "</td>"
                                 + "<td>" + order.dateTime.date + " " + order.dateTime.time + "</td>"
                                 + "<td>" + order.status + "</td>"
                                 + "<td>" + order.phone + "</td>";

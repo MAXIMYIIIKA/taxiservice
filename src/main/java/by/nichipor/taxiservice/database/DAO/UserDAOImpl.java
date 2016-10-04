@@ -7,6 +7,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +36,18 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_INSERT_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
     private static final String SQL_UPDATE_USER = "UPDATE users SET username = ?, password = ?, enabled = ? WHERE userId = ?";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username = ? AND userId = ?";
+    private static final String SQL_INSERT_IMAGE = "INSERT INTO avatars (username, image) VALUES (?, ?)";
+    private static final String SQL_SELECT_IMAGE = "SELECT * FROM avatars WHERE username = ?";
+    private static final String SQL_COUNT_IMAGE = "SELECT COUNT(*) FROM avatars WHERE username = ?";
+    private static final String SQL_UPDATE_IMAGE = "UPDATE avatars SET image = ? WHERE username = ?";
+    private static final String SQL_DELETE_IMAGE = "DELETE FROM avatars WHERE username = ?";
     private static final String USER_ID_FIELD = "userId";
     private static final String USERNAME_FIELD = "username";
     private static final String PASSWORD_FIELD = "password";
     private static final String ENABLED_FIELD = "enabled";
     private static final String ROLE_FIELD = "role";
+    private static final String IMAGE_FIELD = "image";
+    private static final int BUFFER_SIZE = 4096;
 
 
     @Autowired
@@ -148,6 +158,17 @@ public class UserDAOImpl implements UserDAO {
         return roles;
     }
 
+    /**
+     * This method is used to update(create, delete, change) specified user's specified role.
+     * <p>
+     *     Which one of the options will be used is depends on the SQL query.
+     * </p>
+     * @param user the user whose role we want to update.
+     * @param role the role which we want to update.
+     * @param sqlQuery SQL query for updating the role.
+     * @return true if the SQL query executed successfully; false if it is not.
+     * @throws InterruptedException if interrupted while getting connection.
+     */
     private boolean updateUserRole(User user, Role role, String sqlQuery) throws InterruptedException{
         Connection connection = dbConnPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
@@ -241,4 +262,96 @@ public class UserDAOImpl implements UserDAO {
         }
         return false;
     }
+
+    @Override
+    public boolean addAvatar(String username, InputStream inputStream) throws InterruptedException{
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_IMAGE)){
+            preparedStatement.setString(1, username);
+            preparedStatement.setBlob(2, inputStream);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
+        }
+        return false;
+    }
+
+    @Override
+    public byte[] findAvatar(String username) throws InterruptedException{
+        byte[] avatar;
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_IMAGE)){
+            preparedStatement.setString(1, username);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte [] buffer = new byte[BUFFER_SIZE];
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Blob blob = resultSet.getBlob(IMAGE_FIELD);
+                InputStream inputStream = blob.getBinaryStream();
+                while (inputStream.read(buffer, 0, buffer.length) != -1) {
+                    outputStream.write(buffer, 0, buffer.length);
+                }
+                avatar = outputStream.toByteArray();
+                return avatar;
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return new byte[1];
+    }
+
+    @Override
+    public boolean hasAvatar(String username) throws InterruptedException {
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_COUNT_IMAGE)){
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if (resultSet.getInt(1) == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAvatar(String username, InputStream inputStream) throws InterruptedException {
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_IMAGE)){
+            preparedStatement.setBlob(1, inputStream);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteAvatar(String username) throws InterruptedException {
+        Connection connection = dbConnPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_IMAGE)){
+            preparedStatement.setString(1, username);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            dbConnPool.putConnection(connection);
+        }
+        return false;
+    }
+
+
 }

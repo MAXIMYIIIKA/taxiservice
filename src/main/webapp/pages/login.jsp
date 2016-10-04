@@ -39,8 +39,8 @@
         <form onsubmit="return checkForm(this);" action="login" method="post">
             <sec:csrfInput />
             <legend><spring:message code="login.legend" /></legend>
-            <input type="text" id="username" name="username" placeholder="<spring:message code="username" />" autofocus/><br/>
-            <input type="password" id="password" name="password" placeholder="<spring:message code="password" />"/>
+            <input type="text" id="username" name="username" placeholder="<spring:message code="username" />" autofocus required/><br/>
+            <input type="password" id="password" name="password" placeholder="<spring:message code="password" />" required/>
             <div class="form-actions">
                 <button type="submit" class="btn"><spring:message code="login_button" /></button>
                 <a href="register"><button type="button" class="btn"><spring:message code="register_button" /></button></a>

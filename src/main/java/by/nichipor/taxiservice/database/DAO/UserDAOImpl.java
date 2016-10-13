@@ -20,6 +20,10 @@ import java.util.Map;
  * Created by Max Nichipor on 09.08.2016.
  */
 
+/**
+ * A main user's Data Access Object layer class.
+ * @author Max Nichipor
+ */
 @Component
 public class UserDAOImpl implements UserDAO {
 
@@ -159,14 +163,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     /**
-     * This method is used to update(create, delete, change) specified user's specified role.
+     * Updates(creates/deletes/changes) specified user's {@link Role role}.
      * <p>
      *     Which one of the options will be used is depends on the SQL query.
      * </p>
-     * @param user the user whose role we want to update.
-     * @param role the role which we want to update.
-     * @param sqlQuery SQL query for updating the role.
-     * @return true if the SQL query executed successfully; false if it is not.
+     * @param user the {@link User user} whose role we want to update.
+     * @param role the {@link Role role} that we want to update.
+     * @param sqlQuery SQL query for updating the {@link Role role}.
+     * @return true if the SQL query executed successfully;
+     * false if it is not.
      * @throws InterruptedException if interrupted while getting connection.
      */
     private boolean updateUserRole(User user, Role role, String sqlQuery) throws InterruptedException{

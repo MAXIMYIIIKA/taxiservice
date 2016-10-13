@@ -1,0 +1,3 @@
+INSERT INTO users (username, password, enabled) VALUES ('admin', '$2a$10$yIdDt1Pk40i3RPjwM3Rd.OmxK2zP.LtZjbzAwz1zu3YnqPWtFcBjy', 1);
+INSERT INTO users (username, password, enabled) VALUES ('user', '$2a$10$NmDwM0oBpvmyCDLNgYzp4O3QRdKzZsAFVLcrRLzJqdx3VGVsijSdK', 1);
+INSERT INTO users (username, password, enabled) VALUES ('dispatcher', '$2a$10$4uOkrU4YbRLQ4P6yok6zkOMHTTPNaC01ZCPxBT43azg1tK/hxJ7sq', 1);

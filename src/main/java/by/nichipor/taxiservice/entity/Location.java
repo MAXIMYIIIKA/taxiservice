@@ -7,7 +7,7 @@ package by.nichipor.taxiservice.entity;
 import by.nichipor.taxiservice.service.converter.CoordsConverter;
 
 /**
- * This is an immutable location instance.
+ * An immutable location instance.
  */
 public class Location {
     private double lat;

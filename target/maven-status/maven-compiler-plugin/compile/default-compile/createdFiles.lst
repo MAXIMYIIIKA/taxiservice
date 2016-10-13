@@ -5,15 +5,12 @@ by\nichipor\taxiservice\database\dao\UserDAOImpl.class
 by\nichipor\taxiservice\database\config\DBConnPoolImpl.class
 by\nichipor\taxiservice\service\main\controller\MainPageController.class
 by\nichipor\taxiservice\service\adminpanel\controller\AdminPanelController.class
-by\nichipor\taxiservice\security\controller\LoginController.class
 by\nichipor\taxiservice\database\dao\OrderDAOImpl.class
 by\nichipor\taxiservice\service\notifier\Notifier$1.class
 by\nichipor\taxiservice\database\config\DBConnPool.class
 by\nichipor\taxiservice\security\config\SecurityWebApplicationInitializer.class
 by\nichipor\taxiservice\entity\type\DateTime.class
 by\nichipor\taxiservice\database\dao\UserDAO.class
-by\nichipor\taxiservice\security\controller\AccessDeniedController.class
-by\nichipor\taxiservice\security\controller\RegisterController.class
 by\nichipor\taxiservice\entity\Order.class
 by\nichipor\taxiservice\database\config\DatabaseConfig.class
 by\nichipor\taxiservice\service\dispatch\controller\DispatchController.class
@@ -25,7 +22,10 @@ by\nichipor\taxiservice\service\ordermananger\OrderManager.class
 by\nichipor\taxiservice\service\notifier\Notifier.class
 by\nichipor\taxiservice\service\converter\CoordsConverter.class
 by\nichipor\taxiservice\entity\Location.class
+by\nichipor\taxiservice\service\authorization\controller\AccessDeniedController.class
 by\nichipor\taxiservice\service\userpanel\controller\UserPanelController.class
+by\nichipor\taxiservice\service\authorization\controller\RegisterController.class
 by\nichipor\taxiservice\service\usermanager\UserManager.class
 by\nichipor\taxiservice\security\config\SecurityConfig.class
 by\nichipor\taxiservice\service\dispatcherpanel\controller\DispatcherPanelController.class
+by\nichipor\taxiservice\service\authorization\controller\LoginController.class

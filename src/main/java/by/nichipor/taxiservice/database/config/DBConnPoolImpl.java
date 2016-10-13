@@ -15,10 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 /**
- * This is a database connection pool.
- * <p>
- *     It's a simple implementation of {@linkplain DBConnPool DBConnPool} interface.
- * </p>
+ *  Creates a database connection pool.
  * @author Max Nichipor
  */
 @Component
@@ -29,7 +26,7 @@ public class DBConnPoolImpl implements DBConnPool{
 
     /**
      * Creates a connection pool which size is the specified number of connections.
-     * @param dataSource A DataSource object.
+     * @param dataSource a {@linkplain DataSource data source}.
      * @throws SQLException  if a database access error occurs or
      * this method is called on a closed connection.
      */
@@ -43,12 +40,12 @@ public class DBConnPoolImpl implements DBConnPool{
 
 
     /**
-     * Takes a connection from the pool.
+     * Takes a {@link Connection connection} from the pool.
      * <p>
      *     Waiting up to the specified wait time
      *     if necessary for an element to become available.
      * </p>
-     * @return a Connection object.
+     * @return a {@link Connection connection}
      * @throws InterruptedException if interrupted while waiting.
      */
     @Override
@@ -57,11 +54,6 @@ public class DBConnPoolImpl implements DBConnPool{
 
     }
 
-    /**
-     * Puts back the connection to the connection pool.
-     * @param connection to put to the connection pool (not null).
-     * @throws InterruptedException if interrupted while waiting.
-     */
     @Override
     public void putConnection(Connection connection) throws InterruptedException{
         if (connection != null){

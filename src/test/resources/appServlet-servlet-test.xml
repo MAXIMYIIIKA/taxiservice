@@ -58,6 +58,8 @@
         <jdbc:script location="classpath:schema.sql"/>
         <jdbc:script location="classpath:test-orders-data.sql"/>
         <jdbc:script location="classpath:test-locations-data.sql"/>
+        <jdbc:script location="classpath:test-users-data.sql"/>
+        <jdbc:script location="classpath:test-user-roles-data.sql"/>
     </jdbc:embedded-database>
 
 </beans>

@@ -8,7 +8,10 @@ import java.sql.Time;
  */
 
 /**
- * This class is used to store current date and time of the order.
+ * Stores current date and time of the order.
+ * <p>
+ *     This type is like a DATETIME type in SQL.
+ * </p>
  */
 public class DateTime {
     private Date date;
@@ -19,6 +22,10 @@ public class DateTime {
         this.time = (Time) time.clone();
     }
 
+    /**
+     * Returns current date and time.
+     * @return a new instance of {@link DateTime} with current date and time.
+     */
     public static DateTime getCurrentDateTime(){
         java.util.Date today = new java.util.Date();
         return new DateTime(new Date(today.getTime()), new Time(today.getTime()));

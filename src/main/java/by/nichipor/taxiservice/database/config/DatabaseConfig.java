@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  */
 
 /**
- * This class is a configuration class for the database connection.
+ * A configuration class for the database connection.
  * @author Max Nichipor
  */
 
@@ -23,7 +23,7 @@ public class DatabaseConfig {
      * Creates a bean with the database connection properties.
      *
      * <p>
-     *     This method uses a DriverManagerDataSource object to configure
+     *     Uses a DriverManagerDataSource object to configure
      *     a database connection properties.
      * </p>
      *
@@ -32,7 +32,7 @@ public class DatabaseConfig {
      *     it returns a new connection every time a connection is requested.
      * </p>
      *
-     * @return Data source i.e. a DriverManagerDataSource object.
+     * @return data source
      */
     @Bean(name = "dataSource")
     public DataSource dataSource() {

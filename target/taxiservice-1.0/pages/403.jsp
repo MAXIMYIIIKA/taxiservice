@@ -13,9 +13,10 @@
 <head>
     <title><spring:message code="403.title" /></title>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/main_page.css" />" >
 </head>
 <body>
 <c:import url="upperPanel.jsp" />
-<h1><spring:message code="403.error" /></h1>
+<h1 id="main-message"><spring:message code="403.error" /></h1>
 </body>
 </html>

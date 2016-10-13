@@ -7,7 +7,7 @@ package by.nichipor.taxiservice.entity;
 import by.nichipor.taxiservice.entity.type.DateTime;
 
 /**
- * This is the order instance.
+ * Describes the order instance.
  */
 public class Order {
     private int orderId;
@@ -19,9 +19,9 @@ public class Order {
     private String phone;
 
     /**
-     * This constructor creates a new order only with current location.
-     * @param username username of the user who makes the order.
-     * @param currentLocation current location of the user.
+     * Creates a new order with current location only.
+     * @param username username of the {@link User user} who makes the order.
+     * @param currentLocation current {@link Location location} of the user.
      * @param phone the user's phone number.
      */
     public Order(String username, Location currentLocation, String phone){
@@ -33,10 +33,10 @@ public class Order {
     }
 
     /**
-     * This constructor creates a new order with both current and target location.
-     * @param username username of the user who makes the order.
-     * @param currentLocation current location of the user.
-     * @param targetLocation target location of the user.
+     * Creates a new order with both current and target location.
+     * @param username username of the {@link User user} who makes the order.
+     * @param currentLocation current {@link Location location} of the user.
+     * @param targetLocation target {@link Location location} of the user.
      * @param phone the user's phone number.
      */
     public Order(String username,
@@ -50,11 +50,11 @@ public class Order {
     }
 
     /**
-     * This constructor creates the order object to be filled from the database.
-     * @param id order ID.
-     * @param username name of the user who made the order.
-     * @param currentLocation start location of the user.
-     * @param targetLocation target location of the user.
+     * Creates the order object to be filled from the database.
+     * @param id order id.
+     * @param username name of the {@link User user} who made the order.
+     * @param currentLocation start {@link Location location}.
+     * @param targetLocation target {@link Location location}.
      * @param dateTime order's date and time.
      * @param status order's status.
      * @param phone the user's phone number.

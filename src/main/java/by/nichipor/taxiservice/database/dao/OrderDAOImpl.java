@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * This is the implementation of the {@linkplain OrderDAO order data access object}.
+ * A main order's Data Access Object layer class.
  * @author Max Nichipor
  */
 @Component
@@ -74,8 +74,6 @@ public class OrderDAOImpl implements OrderDAO {
     private static final String ORDER_ID_FIELD = "orderId";
     private static final String USERNAME_FIELD = "username";
     private static final String LOCATION_ID_FIELD = "locationId";
-    private static final String LAT_FIELD = "lat";
-    private static final String LNG_FIELD = "lng";
     private static final String CURRLAT_FIELD = "currLat";
     private static final String CURRLNG_FIELD = "currLng";
     private static final String TARGLAT_FIELD = "targLat";
@@ -143,14 +141,11 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     /**
-     * This method is used to find the order in database by SQL query and one parameter.
-     *
+     * Finds the order in database by SQL query and one parameter.
      * <p>
-     *     This method calls
-     *     {@linkplain #findOrdersByString(String, String, String) findOrderByString} method
-     *     with the second parameter which equals null.
+     *     It calls {@linkplain #findOrdersByString(String, String, String) findOrderByString} method
+     *     with the second parameter which equals <script>null</script>.
      * </p>
-     *
      * @param sql SQL query.
      * @param param1 SQL query parameter.
      * @return a list of orders.
@@ -161,16 +156,14 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     /**
-     * This method is used to find  the order in database by SQL query and two parameters.
-     *
+     * Finds the order in database by SQL query and two parameters.
      * <p>
-     *     This method will be called only when two parameters will not null.
+     *     It will be called only when two parameters are not <script>null</script>.
      * </p>
-     *
      * @param sql SQL query.
      * @param param1 the first SQL query parameter.
      * @param param2 the second SQL query parameter.
-     * @return a list of orders.
+     * @return a list of {@link Order orders}.
      * @throws InterruptedException if interrupted while getting connection.
      */
     private List<Order> findOrdersByString(String sql, String param1, String param2) throws InterruptedException{
@@ -261,10 +254,10 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     /**
-     * This method is used locally for adding a {@link Location} to the database.
+     * Adds the specified {@link Location location} to the database.
      * @param connection current connection which is taken from connection pool by the method invokes this.
-     * @param location the {@link Location} to add.
-     * @return true if adding has been successful; false if it is not.
+     * @param location the {@link Location location} to add.
+     * @return <script>true</script> if adding has been successful; <script>false</script> if it is not.
      */
     private boolean addLocation(Connection connection, Location location) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_LOCATION)){
@@ -279,9 +272,9 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     /**
-     * This method is used locally to find the specified {@link Location} id in the database.
+     * Find the specified location id in the database.
      * @param connection current connection which is taken from connection pool by the method invokes this.
-     * @param location the {@link Location} which id we are looking for.
+     * @param location the {@link Location location} which id we are looking for.
      * @return id if found; -1 if there is no such a location.
      */
     private int findLocationId(Connection connection,Location location){
@@ -298,10 +291,10 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     /**
-     * This method is used locally for deleting specified location from database.
-     * @param connection current connection is taken from connection pool by the method invokes this.
+     * Deletes specified {@link Location location} from the database.
+     * @param connection current connection which is taken from connection pool by the method invokes this.
      * @param locationId id of the location to delete.
-     * @return true if deleting has been successful; false if it not.
+     * @return <script>true</script> if deleting has been successful; <script>false</script> if it not.
      */
     private boolean deleteLocation(Connection connection, int locationId) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_LOCATION)){

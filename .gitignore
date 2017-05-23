@@ -61,3 +61,4 @@ buildNumber.properties
 #IDEA
 .idea/
 .iml
+/taxiservice.iml

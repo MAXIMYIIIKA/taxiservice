@@ -58,6 +58,11 @@
             </form>
         </div>
         <h1 id="username">${username}</h1>
+        <form method="get">
+            <button id="changeUsernameBtn" name="changeUsername" value="true">
+                <span>change</span>
+            </button>
+        </form>
 
     </div>
 </div>

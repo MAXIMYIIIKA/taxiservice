@@ -19,21 +19,23 @@
 </head>
 <body>
 <c:import url="upperPanel.jsp" />
-    <table id="new-orders" class="simple-table">
-        <tr>
-            <td></td>
-            <td class="table-header" colspan="7"><spring:message code="orders" /></td>
-        </tr>
-        <tr>
-            <th>id</th>
-            <th><spring:message code="username" /></th>
-            <th><spring:message code="order.current_position" /></th>
-            <th><spring:message code="order.target_position" /></th>
-            <th><spring:message code="date" /></th>
-            <th><spring:message code="status" /></th>
-            <th><spring:message code="phone" /></th>
-        </tr>
-    </table>
+    <div class="dispatch-table-wrapper">
+        <table id="new-orders" class="simple-table">
+            <tr>
+                <td></td>
+                <td class="table-header" colspan="7"><spring:message code="orders" /></td>
+            </tr>
+            <tr>
+                <th>id</th>
+                <th><spring:message code="username" /></th>
+                <th><spring:message code="order.current_position" /></th>
+                <th><spring:message code="order.target_position" /></th>
+                <th><spring:message code="date" /></th>
+                <th><spring:message code="status" /></th>
+                <th><spring:message code="phone" /></th>
+            </tr>
+        </table>
+    </div>
     <div id="new-order"><div id="new-order-sound"></div></div>
 </body>
 </html>

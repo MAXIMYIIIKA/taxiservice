@@ -31,68 +31,68 @@
     </div>
 </div>
 <c:import url="upperPanel.jsp" />
-<div id="parent-user-info">
-    <table class="simple-table entityList">
-        <tr>
-            <th><spring:message code="user.number_acc_orders"/> </th>
-        </tr>
-        <tr><td>${numberOfUserOrders}</td></tr>
-    </table>
-    <div id="user-info">
-        <div id="avatar">
-            <form method="get">
-                <button id="deleteBtn" name="deleteAvatar" value="true">
-                    <span>delete</span>
-                </button>
-            </form>
-            <c:if test="${hasAvatar}">
-                <img id="image" alt="img" src="data:image/jpeg;base64,${image}"/>
-            </c:if>
-            <c:if test="${!hasAvatar}">
-                <img id="image" alt="img" src="<c:url value="/resources/images/no_avatar.png"/>"/>
-            </c:if>
-            <form id="change-avatar" method="post" enctype="multipart/form-data">
-                <sec:csrfInput />
-                <div id="imgInput"><spring:message code="user.change"/></div>
-                <input id="inputBtn" type="file" name="avatar" accept="image/*">
-            </form>
-        </div>
-        <h1 id="username">${username}</h1>
-        <form method="get">
-            <button id="changeUsernameBtn" name="changeUsername" value="true">
-                <span>change</span>
-            </button>
-        </form>
 
+<div class="main-wrapper">
+    <div class="central-user-panel-wrapper">
+        <div id="parent-user-info">
+            <table class="simple-table entityList">
+                <tr>
+                    <th><spring:message code="user.number_acc_orders"/> </th>
+                </tr>
+                <tr><td>${numberOfUserOrders}</td></tr>
+            </table>
+            <div id="user-info">
+                <div id="avatar">
+                    <form method="get">
+                        <button id="deleteBtn" name="deleteAvatar" value="true">
+                            <span>delete</span>
+                        </button>
+                    </form>
+                    <c:if test="${hasAvatar}">
+                        <img id="image" alt="img" src="data:image/jpeg;base64,${image}"/>
+                    </c:if>
+                    <c:if test="${!hasAvatar}">
+                        <img id="image" alt="img" src="<c:url value="/resources/images/no_avatar.png"/>"/>
+                    </c:if>
+                    <form id="change-avatar" method="post" enctype="multipart/form-data">
+                        <sec:csrfInput />
+                        <div id="imgInput"><spring:message code="user.change"/></div>
+                        <input id="inputBtn" type="file" name="avatar" accept="image/*">
+                    </form>
+                </div>
+                <h1 id="username">${username}</h1>
+
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="simple-table entityList">
+                <tr>
+                    <td></td>
+                    <td colspan="6" class="table-header"><spring:message code="user.orders_history"/></td>
+                </tr>
+                <tr>
+                    <th>id</th>
+                    <th><spring:message code="username" /></th>
+                    <th><spring:message code="order.current_position" /></th>
+                    <th><spring:message code="order.target_position" /></th>
+                    <th><spring:message code="date" /></th>
+                    <th><spring:message code="status" /></th>
+                    <th><spring:message code="phone" /></th>
+                </tr>
+                <c:forEach var="order" items="${orders}">
+                    <tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.username}</td>
+                        <td>${order.currentLocation.degreesMinutesSeconds}</td>
+                        <td>${order.targetLocation.degreesMinutesSeconds}</td>
+                        <td>${order.dateTime.date} ${order.dateTime.time}</td>
+                        <td>${order.status}</td>
+                        <td>${order.phone}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
-</div>
-<div>
-    <table class="simple-table entityList">
-        <tr>
-            <td></td>
-            <td colspan="6" class="table-header"><spring:message code="user.orders_history"/></td>
-        </tr>
-        <tr>
-            <th>id</th>
-            <th><spring:message code="username" /></th>
-            <th><spring:message code="order.current_position" /></th>
-            <th><spring:message code="order.target_position" /></th>
-            <th><spring:message code="date" /></th>
-            <th><spring:message code="status" /></th>
-            <th><spring:message code="phone" /></th>
-        </tr>
-        <c:forEach var="order" items="${orders}">
-            <tr>
-                <td>${order.orderId}</td>
-                <td>${order.username}</td>
-                <td>${order.currentLocation.degreesMinutesSeconds}</td>
-                <td>${order.targetLocation.degreesMinutesSeconds}</td>
-                <td>${order.dateTime.date} ${order.dateTime.time}</td>
-                <td>${order.status}</td>
-                <td>${order.phone}</td>
-            </tr>
-        </c:forEach>
-    </table>
 </div>
 </body>
 </html>

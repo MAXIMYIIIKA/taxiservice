@@ -348,3 +348,9 @@ form{
     visibility: hidden;
     transition: opacity 1s, visibility 0s 1s;
 }
+
+/* DISPATCH */
+.dispatch-table-wrapper{
+    max-width: 1000px;
+    margin: 0 auto;
+}

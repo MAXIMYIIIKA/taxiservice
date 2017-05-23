@@ -30,7 +30,7 @@
         ${function}
     </div>
 </div>
-<div>
+<div class="dispatch-table-wrapper">
     <table class="simple-table entityList">
         <tr>
             <td></td>
